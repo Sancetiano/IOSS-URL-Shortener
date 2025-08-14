@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Shortener</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        function validateUrl() {
+            const urlInput = document.getElementById('long_url').value;
+            const urlPattern = /^(https?:\/\/)?([\w\-]+(\.[\w\-]+)+[/#?]?.*)$/i;
+            if (!urlPattern.test(urlInput)) {
+                alert('Please enter a valid URL (e.g., https://example.com)');
+                return false;
+            }
+            return true;
+        }
+    </script>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col">
+    <header class="bg-blue-600 text-white p-4">
+        <h1 class="text-2xl font-bold">URL Shortener</h1>
+    </header>
+    <main class="container mx-auto p-6 flex-grow">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="bg-{{ message.tags }}-100 border-l-4 border-{{ message.tags }}-500 text-{{ message.tags }}-700 p-4 mb-4" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        {% if user.is_authenticated %}
+            <div class="mb-6 flex justify-between items-center">
+                <p class="text-lg">Welcome, {{ user.username }}!</p>
+                <form method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Logout</button>
+                </form>
+            </div>
+
+            <h2 class="text-xl font-semibold mb-4">Your Recent Shortened URLs</h2>
+            {% if recent_urls %}
+                <ul class="space-y-2">
+                    {% for url in recent_urls %}
+                        <li class="bg-white p-4 rounded shadow">
+                            <a href="{{ request.build_absolute_uri }}{{ url.short_code }}" class="text-blue-500 hover:underline">{{ request.build_absolute_uri }}{{ url.short_code }}</a>
+                            &rarr; {{ url.long_url }} <span class="text-gray-500 text-sm">({{ url.created_at }})</span>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="text-gray-600">No recent URLs.</p>
+            {% endif %}
+        {% else %}
+            <div class="mb-6 flex space-x-4">
+                <a href="{% url 'signup' %}" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Sign Up</a>
+                <a href="{% url 'login' %}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Login</a>
+            </div>
+        {% endif %}
+
+        <h2 class="text-xl font-semibold mt-8 mb-4">Shorten a URL</h2>
+        <form method="post" onsubmit="return validateUrl()" class="mb-6">
+            {% csrf_token %}
+            <div class="flex space-x-2">
+                <input type="url" id="long_url" name="long_url" class="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Enter long URL" required>
+                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Shorten</button>
+            </div>
+        </form>
+
+        {% if short_url %}
+            <p class="bg-green-100 p-4 rounded">Shortened URL: <a href="{{ short_url }}" class="text-blue-500 hover:underline">{{ short_url }}</a></p>
+        {% endif %}
+    </main>
+    <footer class="bg-gray-800 text-white text-center p-4">
+        <p>&copy; 2025 URL Shortener</p>
+    </footer>
+</body>
+</html>
