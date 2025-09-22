@@ -74,7 +74,7 @@ Set up a `.env` file in the project root or configure environment variables:
 DATABASE_URL=postgres://<user>:<password>@<host>:<port>/<dbname>
 SECRET_KEY=<your-secret-key>
 ```
-- Obtain `DATABASE_URL` from a PostgreSQL provider like ElephantSQL.
+- Obtain `DATABASE_URL` from a PostgreSQL provider.
 - Generate a secure `SECRET_KEY` (e.g., using `django.core.management.utils.get_random_secret_key()`).
 
 Update `urlshortener/settings.py` if not already configured:
