@@ -160,10 +160,6 @@ Access the app at `http://127.0.0.1:8000/`.
    - Environment Variables: `DATABASE_URL`, `SECRET_KEY`, `PYTHON_VERSION=3.12.3`
 5. Deploy and access at `https://your-app.onrender.com`.
 
-### Notes
-- **Free Tiers**: Heroku and Render free plans sleep after inactivity (30min for Heroku, 15min for Render). Upgrade for persistent uptime.
-- **Database**: Use ElephantSQL’s free tier (20MB) or similar. Monitor usage to avoid limits.
-- **Static Files**: WhiteNoise handles static files automatically after `python manage.py collectstatic`.
 
 ## Troubleshooting
 
