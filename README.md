@@ -48,7 +48,7 @@ urlshortener/
 ## Prerequisites
 
 - **Python**: 3.12.3 (specified in `runtime.txt`).
-- **PostgreSQL Database**: A cloud-hosted database (e.g., ElephantSQL free tier).
+- **PostgreSQL Database**: A cloud-hosted database
 - **Git**: For version control and deployment.
 - **Heroku CLI** or **Render account**: For deployment (optional).
 
