@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+import dj_database_url
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,12 +22,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-9v$8$%*wzw$31z55g2b3vi16!_1583vupz5s240)9$!rj)*!)z'
+
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-9v$8$%*wzw$31z55g2b3vi16!_1583vupz5s240)9$!rj)*!)z')  # Use a strong fallback for local dev
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('RENDER') != 'true'  # True locally, False on Render
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']  # Or add your Render domain later (e.g., ['your-app.onrender.com'])
 
 
 # Application definition
