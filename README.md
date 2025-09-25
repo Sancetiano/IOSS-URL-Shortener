@@ -2,7 +2,7 @@
 
 A Django-based web application that allows users to shorten long URLs, redirect to original URLs using short codes, and manage their shortened URLs with user authentication. The project includes a modern frontend styled with Tailwind CSS and dynamic client-side validation for a better user experience.
 
-Access the website live at https://url-shortener-v0oi.onrender.com
+I have deployed live at https://url-shortener-v0oi.onrender.com. It might not be accessible due to render's free tier inactivity sleep. Ping me to access and try the website.
 
 ## Features
 
