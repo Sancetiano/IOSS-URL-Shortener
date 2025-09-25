@@ -2,6 +2,8 @@
 
 A Django-based web application that allows users to shorten long URLs, redirect to original URLs using short codes, and manage their shortened URLs with user authentication. The project includes a modern frontend styled with Tailwind CSS and dynamic client-side validation for a better user experience.
 
+Access the website live at https://url-shortener-v0oi.onrender.com
+
 ## Features
 
 - **URL Shortening**: Convert long URLs into short links (e.g., `http://127.0.0.1:8000/abc123`).
@@ -16,14 +18,15 @@ A Django-based web application that allows users to shorten long URLs, redirect 
 ```
 urlshortener/
 ├── manage.py
+├── build.sh
 ├── requirements.txt
-├── Procfile
-├── runtime.txt
+├── db.sqlite3
 ├── urlshortener/
 │   ├── __init__.py
 │   ├── settings.py
 │   ├── urls.py
 │   ├── wsgi.py
+│   ├── asgi.py
 ├── shortener/
 │   ├── __init__.py
 │   ├── admin.py
@@ -43,14 +46,14 @@ urlshortener/
 - `urlshortener/`: Project settings and configuration.
 - `shortener/`: Main app containing models, views, and templates.
 - `requirements.txt`: Lists dependencies (Django, psycopg2-binary, etc.).
-- `Procfile` and `runtime.txt`: For deployment to Heroku/Render.
+
 
 ## Prerequisites
 
-- **Python**: 3.12.3 (specified in `runtime.txt`).
+- **Python**: 3.12 or newer 
 - **PostgreSQL Database**: A cloud-hosted database
 - **Git**: For version control and deployment.
-- **Heroku CLI** or **Render account**: For deployment (optional).
+- **Render account**: For deployment (optional).
 
 ## Setup Instructions
 
@@ -129,35 +132,17 @@ Access the app at `http://127.0.0.1:8000/`.
 - **Logout (`/logout/`)**:
   - Logs out and redirects to the homepage.
 
-## Deployment
-
-### Heroku
-1. Install Heroku CLI: https://devcenter.heroku.com/articles/heroku-cli
-2. Log in: `heroku login`
-3. Create an app: `heroku create your-app-name`
-4. Set environment variables:
-   ```bash
-   heroku config:set DATABASE_URL=<your-elephantsql-url>
-   heroku config:set SECRET_KEY=<your-secret-key>
-   ```
-5. Deploy:
-   ```bash
-   git add .
-   git commit -m "Deploy to Heroku"
-   git push heroku main
-   heroku run python manage.py migrate
-   ```
-6. Open: `heroku open`
+## How I Deployed
 
 ### Render
-1. Push code to a GitHub repository.
+1. Push code to this GitHub repository.
 2. Sign up at https://render.com and create a new Web Service.
 3. Connect your GitHub repo.
 4. Configure:
    - Runtime: Python
-   - Build Command: `pip install -r requirements.txt`
-   - Start Command: `gunicorn urlshortener.wsgi`
-   - Environment Variables: `DATABASE_URL`, `SECRET_KEY`, `PYTHON_VERSION=3.12.3`
+   - Build Command: `cd urlshortener && ./build.sh`
+   - Start Command: `cd urlshortener && gunicorn urlshortener.wsgi:application --log-file -`
+   - Environment Variables: `DATABASE_URL`, `SECRET_KEY`, `WEB_CONCURRENCY`, `RENDER`
 5. Deploy and access at `https://your-app.onrender.com`.
 
 
@@ -175,4 +160,4 @@ Access the app at `http://127.0.0.1:8000/`.
 - Add analytics for URL click tracking.
 
 ## License
-MIT License. Feel free to use and modify this project.
+MIT License. Feel free to use and modify this project locally
